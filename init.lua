@@ -144,7 +144,7 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
     -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
     'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
-
+    'ThePrimeagen/vim-be-good',
     -- NOTE: Plugins can also be added by using a table,
     -- with the first argument being the link and the following
     -- keys can be used to configure plugin behavior/loading/etc.
@@ -190,22 +190,22 @@ require('lazy').setup({
     -- after the plugin has been loaded:
     --  config = function() ... end
 
-    { -- Useful plugin to show you pending keybinds.
-        'folke/which-key.nvim',
-        event = 'VimEnter', -- Sets the loading event to 'VimEnter'
-        config = function() -- This is the function that runs, AFTER loading
-            require('which-key').setup()
-
-            -- Document existing key chains
-            require('which-key').register {
-                ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
-                ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-                ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
-                ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-                ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
-            }
-        end,
-    },
+    --    { -- Useful plugin to show you pending keybinds.
+    --       'folke/which-key.nvim',
+    --      event = 'VimEnter', -- Sets the loading event to 'VimEnter'
+    --      config = function() -- This is the function that runs, AFTER loading
+    --         require('which-key').setup()
+    --
+    --          -- Document existing key chains
+    --        require('which-key').register {
+    --          ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
+    --         ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
+    --         ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
+    --         ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
+    --         ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
+    --    }
+    --   end,
+    --   },
 
     -- NOTE: Plugins can specify dependencies.
     --
@@ -213,7 +213,6 @@ require('lazy').setup({
     -- you do for a plugin at the top level, you can do for a dependency.
     --
     -- Use the `dependencies` key to specify the dependencies of a particular plugin
-
     { -- Fuzzy Finder (files, lsp, etc)
         'nvim-telescope/telescope.nvim',
         event = 'VimEnter',
@@ -499,7 +498,6 @@ require('lazy').setup({
             --
             --  You can press `g?` for help in this menu.
             require('mason').setup()
-
             -- You can add other tools here that you want Mason to install
             -- for you, so that they are available from within Neovim.
             local ensure_installed = vim.tbl_keys(servers or {})
