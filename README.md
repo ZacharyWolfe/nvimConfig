@@ -1,1 +1,3 @@
-My NeoVim config.
+# My NeoVim config.
+
+### Hope you enjoy!
