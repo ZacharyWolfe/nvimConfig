@@ -78,11 +78,11 @@ vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
---vim.keymap.set('n', '<leader>pv', vim.cmd.Ex, { desc = 'Exit to explorer, open file tree' })
+vim.keymap.set('n', '<leader>pv', vim.cmd.Ex, { desc = 'Exit to explorer, open file tree' })
 vim.keymap.set('n', '<C-n>', vim.cmd.tabnew, { desc = 'Create a new tab window' })
 vim.keymap.set('n', ']b', vim.cmd.tabnext)
 vim.keymap.set('n', '[b', vim.cmd.tabprevious)
-vim.keymap.set('n', '<leader>pv', ':Neotree position=current<CR>', { desc = 'Open Explorer' })
+vim.keymap.set('n', '<leader>pn', ':Neotree position=current<CR>', { desc = 'Open Explorer' })
 vim.keymap.set('n', '<leader>nc', ':Neotree toggle<CR>', { desc = 'Toggle Neotree' })
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -144,6 +144,8 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
     -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
     'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
+    'ellisonleao/gruvbox.nvim',
+    'rose-pine/neovim',
     'ThePrimeagen/vim-be-good',
     -- NOTE: Plugins can also be added by using a table,
     -- with the first argument being the link and the following
@@ -725,7 +727,7 @@ require('lazy').setup({
         'nvim-treesitter/nvim-treesitter',
         build = ':TSUpdate',
         opts = {
-            ensure_installed = { 'bash', 'c', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc' },
+            ensure_installed = { 'bash', 'c', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc', 'typescript', 'tsx', 'cpp', 'javascript' },
             -- Autoinstall languages that are not installed
             auto_install = true,
             highlight = {
