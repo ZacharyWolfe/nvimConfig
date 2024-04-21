@@ -9,7 +9,6 @@ vim.g.have_nerd_font = true
 -- See `:help vim.opt`
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
-
 -- Make line numbers default
 vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.
@@ -93,10 +92,10 @@ vim.keymap.set("n", "<leader>nc", ":Neotree toggle<CR>", { desc = "Toggle Neotre
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 -- TIP: Disable arrow keys in normal mode
--- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
--- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
--- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
--- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
+vim.keymap.set("n", "<left>", '<cmd>echo "Use h to move!!"<CR>')
+vim.keymap.set("n", "<right>", '<cmd>echo "Use l to move!!"<CR>')
+vim.keymap.set("n", "<up>", '<cmd>echo "Use k to move!!"<CR>')
+vim.keymap.set("n", "<down>", '<cmd>echo "Use j to move!!"<CR>')
 
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
@@ -145,9 +144,10 @@ require("lazy").setup({
 	-- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
 	"tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
 	"ellisonleao/gruvbox.nvim",
-	"rose-pine/neovim",
-	"ThePrimeagen/vim-be-good",
 	"pmizio/typescript-tools.nvim",
+	"lazyvim.plugins.extras.coding.copilot",
+	"ThePrimeagen/vim-be-good",
+
 	-- NOTE: Plugins can also be added by using a table,
 	-- with the first argument being the link and the following
 	-- keys can be used to configure plugin behavior/loading/etc.
@@ -327,6 +327,7 @@ require("lazy").setup({
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"MunifTanjim/nui.nvim",
+			{ "nvim-tree/nvim-web-devicons", enabled = true },
 		},
 	},
 	{ -- LSP Configuration & Plugins
@@ -527,7 +528,24 @@ require("lazy").setup({
 			})
 		end,
 	},
-
+	{
+		"zbirenbaum/copilot-cmp",
+		config = function()
+			require("copilot_cmp").setup()
+		end,
+	},
+	{
+		{ "LazyVim/LazyVim", import = "lazyvim.plugins" },
+		{ import = "lazyvim.plugins.extras.coding.copilot" },
+		{ import = "plugins" },
+	},
+	{
+		"rcarriga/nvim-notify",
+		opts = {
+			render = "compact",
+			timeout = 1950,
+		},
+	},
 	{ -- Autoformat
 		"stevearc/conform.nvim",
 		lazy = false,
@@ -670,18 +688,65 @@ require("lazy").setup({
 		end,
 	},
 
+	{
+		{ "folke/which-key.nvim", enabled = false },
+		{ "echasnovski/mini.nvim", enabled = false },
+		{ "echasnovski/mini.indentscope", enabled = false },
+		{ "j-hui/fidget.nvim", enabled = false },
+	},
+
 	{ -- You can easily change to a different colorscheme.
 		-- Change the name of the colorscheme plugin below, and then
-		-- change the command in the config to whatever the name of that colorscheme is.
+		-- change the command in the config to whatever the name of that colorscheme i		--
 		--
 		-- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-		"folke/tokyonight.nvim",
+
+		"navarasu/onedark.nvim",
 		priority = 1000, -- Make sure to load this before all the other start plugins.
-		init = function()
+		config = function()
+			require("onedark").setup({
+				-- Main options --
+				style = "dark", -- Default theme style. Choose between 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
+				transparent = false, -- Show/hide background
+				term_colors = true, -- Change terminal color as per the selected theme style
+				ending_tildes = false, -- Show the end-of-buffer tildes. By default ihey are hidden
+				cmp_itemkind_reverse = false, -- reverse item kind highlights in cmp menu
+
+				-- toggle theme style ---
+				toggle_style_key = nil, -- keybind to toggle theme style. Leave it nil to disable it, or set it to a string, for example "<leader>ts"
+				toggle_style_list = { "dark", "darker", "cool", "deep", "warm", "warmer", "light" }, -- List of styles to toggle between
+
+				-- Change code style ---
+				-- Options are italic, bold, underline, none
+				-- You can configure multiple style with comma separated, For e.g., keywords = 'italic,bold'
+				code_style = {
+					comments = "italic",
+					keywords = "none",
+					functions = "none",
+					strings = "none",
+					variables = "none",
+				},
+
+				-- Lualine options --
+				lualine = {
+					transparent = false, -- lualine center bar transparency
+				},
+
+				-- Custom Highlights --
+				colors = {}, -- Override default colors
+				highlights = {}, -- Override highlight groups
+
+				-- Plugins Config --
+				diagnostics = {
+					darker = true, -- darker colors for diagnostic
+					undercurl = true, -- use undercurl instead of underline for diagnostics
+					background = true, -- use background color for virtual text
+				},
+			})
 			-- Load the colorscheme here.
 			-- Like many other themes, this one has different styles, and you could load
 			-- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-			vim.cmd.colorscheme("rose-pine-main")
+			vim.cmd.colorscheme("onedark")
 
 			-- You can configure highlights by doing something like:
 			vim.cmd.hi("Comment gui=none")
@@ -748,6 +813,7 @@ require("lazy").setup({
 				"vimdoc",
 				"typescript",
 				"tsx",
+				"jsx",
 				"cpp",
 				"javascript",
 			},
@@ -766,7 +832,11 @@ require("lazy").setup({
 			-- [[ Configure Treesitter ]] See `:help nvim-treesitter`
 
 			---@diagnostic disable-next-line: missing-fields
-			require("nvim-treesitter.configs").setup(opts)
+			require("nvim-treesitter.configs").setup({
+				highlight = {
+					enabled = true,
+				},
+			})
 			vim.treesitter.language.register("templ", "templ")
 			-- There are additional nvim-treesitter modules that you can use to interact
 			-- with nvim-treesitter. You should go explore a few and see what interests you:
@@ -800,21 +870,7 @@ require("lazy").setup({
 	ui = {
 		-- If you are using a Nerd Font: set icons to an empty table which will use the
 		-- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
-		icons = vim.g.have_nerd_font and {} or {
-			cmd = "⌘",
-			config = "🛠",
-			event = "📅",
-			ft = "📂",
-			init = "⚙",
-			keys = "🗝",
-			plugin = "🔌",
-			runtime = "💻",
-			require = "🌙",
-			source = "📄",
-			start = "🚀",
-			task = "📌",
-			lazy = "💤 ",
-		},
+		icons = {},
 	},
 })
 
@@ -877,6 +933,7 @@ require("neo-tree").setup({
 			hijack_netrw_behavior = "open_default",
 		},
 	},
+	dependencies = {},
 })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
