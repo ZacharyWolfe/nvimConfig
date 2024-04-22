@@ -1,3 +1,3 @@
 # My NeoVim config.
 
-### Hope you enjoy!
+#### It's BLAZINGLY🔥 fast.
