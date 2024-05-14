@@ -92,10 +92,10 @@ vim.keymap.set("n", "<leader>nc", ":Neotree toggle<CR>", { desc = "Toggle Neotre
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 -- TIP: Disable arrow keys in normal mode
-vim.keymap.set("n", "<left>", '<cmd>echo "Use h to move!!"<CR>')
-vim.keymap.set("n", "<right>", '<cmd>echo "Use l to move!!"<CR>')
-vim.keymap.set("n", "<up>", '<cmd>echo "Use k to move!!"<CR>')
-vim.keymap.set("n", "<down>", '<cmd>echo "Use j to move!!"<CR>')
+vim.keymap.set("n", "<Left>", '<cmd>echo "Use h to move!!"<CR>')
+vim.keymap.set("n", "<Right>", '<cmd>echo "Use l to move!!"<CR>')
+vim.keymap.set("n", "<Up>", '<cmd>echo "Use k to move!!"<CR>')
+vim.keymap.set("n", "<Down>", '<cmd>echo "Use j to move!!"<CR>')
 
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
@@ -278,7 +278,7 @@ require("lazy").setup({
 					},
 				},
 			})
-
+			-- your mom
 			-- Enable Telescope extensions if they are installed
 			pcall(require("telescope").load_extension, "fzf")
 			pcall(require("telescope").load_extension, "ui-select")
@@ -691,7 +691,7 @@ require("lazy").setup({
 	{
 		{ "folke/which-key.nvim", enabled = false },
 		{ "echasnovski/mini.nvim", enabled = false },
-		{ "echasnovski/mini.indentscope", enabled = false },
+		{ "echasnovski/mini.indentscope", enabled = true },
 		{ "j-hui/fidget.nvim", enabled = false },
 	},
 
@@ -805,10 +805,12 @@ require("lazy").setup({
 			ensure_installed = {
 				"bash",
 				"c",
+				"c#",
 				"html",
 				"lua",
 				"luadoc",
 				"markdown",
+				"python",
 				"vim",
 				"vimdoc",
 				"typescript",
@@ -824,9 +826,9 @@ require("lazy").setup({
 				-- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
 				--  If you are experiencing weird indenting issues, add the language to
 				--  the list of additional_vim_regex_highlighting and disabled languages for indent.
-				additional_vim_regex_highlighting = { "ruby" },
+				additional_vim_regex_highlighting = { "ruby", "python" },
 			},
-			indent = { enable = true, disable = { "ruby" } },
+			indent = { enable = true, disable = { "ruby", "python" } },
 		},
 		config = function(_, opts)
 			-- [[ Configure Treesitter ]] See `:help nvim-treesitter`
